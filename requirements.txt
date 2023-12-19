@@ -1,0 +1,4 @@
+flask_restx
+flask
+Flask-SQLAlchemy
+SQLAlchemy
