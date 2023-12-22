@@ -1,14 +1,19 @@
 <!DOCTYPE html>
-<html>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="style.css">
-
-<header>
-    <h1>Zeus</h1>
-</header>
+<htm lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Station Météo Zeus</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 
 <body>
+    <div class="container">
+<header>
+    <h1>Station Météo Zeus</h1>
+</header>
+
+
     <div>
         <p>adresse ip :</p>
         <p>date :</p>
@@ -17,10 +22,40 @@
         </div>
     </div>
 
-    <form>
-        <username>username :</username>
-        <password>password :</password>
-    </form>
-</body>
+    <div>
+        <label for="Nom d'utilisateur">Nom d'utilisateur :</label>
+        <input type="text" id="Nom d'utilisateur" name="Nom d'utilisateur" />
+      </div>
+      
+      <div>
+        <label for="pass">Mot de passe (8 caractères minimum) :</label>
+        <input type="password" id="pass" name="password" minlength="8" required />
+      </div>
+      
+      <input type="submit" value="Sign in" />
+      
+    <div id="weatherResult"></div>
 
+
+    <div class="container">
+        <h2>Histogramme des Températures</h2>
+        <div id="histogram" class="histogram">
+            <!-- Barre 1 -->
+            <div class="bar" id="bar1"></div>
+            <!-- Barre 2 -->
+            <div class="bar" id="bar2"></div>
+            <!-- Barre 3 -->
+            <div class="bar" id="bar3"></div>
+            <!-- Barre 4 -->
+            <div class="bar" id="bar4"></div>
+            <!-- Barre 5 -->
+            <div class="bar" id="bar5"></div>
+            <!-- Barre 6 -->
+            <div class="bar" id="bar6"></div>
+            <!-- ... Ajoutez plus de barres en fonction de vos données -->
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
 </html>
