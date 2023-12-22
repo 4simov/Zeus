@@ -1,7 +1,10 @@
+import sys
 import time
 import smbus2
 import bme280
+import requests
 
+baseUrl = "http://127.0.0.1:5000"
 # BME280 sensor address (default address)
 address = 0x76
 
@@ -10,9 +13,11 @@ bus = smbus2.SMBus(1)
 
 # Load calibration parameters
 calibration_params = bme280.load_calibration_params(bus, address)
+def celsius(far):
+        return ((far-32)*5)/9
 
 def celsius_to_fahrenheit(celsius):
-    return (celsius * 9/5) + 32
+        return (celsius * 9/5) + 32
 
 while True:
     try:
@@ -26,14 +31,19 @@ while True:
 
         # Convert temperature to Fahrenheit
         temperature_fahrenheit = celsius_to_fahrenheit(temperature_celsius)
-
+        print(sys.argv[1])
         # Print the readings
         print("Temperature: {:.2f} °C, {:.2f} °F".format(temperature_celsius, temperature_fahrenheit))
         print("Pressure: {:.2f} hPa".format(pressure))
         print("Humidity: {:.2f} %".format(humidity))
-
+        
+        r = requests.post(baseUrl + '/re', json={
+  		"temperature": temperature_celsius,
+  		"humidite": humidity
+	})
+        print(f"Status Code: {r.status_code}, Response: {r.json()}")
         # Wait for a few seconds before the next reading
-        time.sleep(2)
+        time.sleep(int(sys.argv[1]))
 
     except KeyboardInterrupt:
         print('Program stopped')
@@ -41,3 +51,4 @@ while True:
     except Exception as e:
         print('An unexpected error occurred:', str(e))
         break
+

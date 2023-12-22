@@ -1,6 +1,6 @@
-from flask import Blueprint
+from flask import Blueprint, request, json
 from Database.db_connexion import db
-from Models.releveModel import db as releve_db, Releve
+from Models.releveModel import Releve
 
 releve_route = Blueprint('releve', __name__) 
 
@@ -13,6 +13,15 @@ class Releve() :
     def get_user():
         return 'Fonction GET relevé'
 
-    @releve_route.post('/releve/id')
+    @releve_route.post('/re')
     def post_user():
-        return 'Fonction POST relevé'
+        if request.is_json:
+            data = request.json
+            re = Releve(data.get('temperature'), data.get('humidite'))
+            #re.temperature = data.get('temperature')
+            #re.humidite = data.get('humidite')
+            #db.session.add(re)
+            #db.session.commit()
+            return {'message': 'Données générées avec succès.'}, 201
+        else:
+            return 'Format not support'

@@ -9,3 +9,7 @@ class Releve(db.Model):
     humidite = db.Column(db.Float)
     ##date = db.Column(db.Date)
     ##heure = db.Column(db.Time)
+    
+    def __init__(self, temp, humidity):
+        self.temperature = temp
+        self.humidite = humidity

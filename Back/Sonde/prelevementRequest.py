@@ -1,11 +1,14 @@
 import requests
 
-baseUrl = "127.0.0.1:5000"
+baseUrl = "http://127.0.0.1:5000"
+
+def test():
+	print("test")
 
 def send():
-	r = requests.post(baseUrl + '/post', json={
+	r = requests.post(baseUrl + 're', json={
   		"temperature": "Jason Sweet",
   		"Quantity": 1,
-  		"Price": 18.00
+  		"time": 18.00
 	})
 	print(f"Status Code: {r.status_code}, Response: {r.json()}")

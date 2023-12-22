@@ -5,3 +5,4 @@ SQLAlchemy
 smbus2
 bme280
 RPI.BME280
+requests
