@@ -1,3 +1,7 @@
+body {
+    background-color: red;
+}
+
 .header {
     width: 100%;
 }
@@ -48,3 +52,4 @@ label {
       background-color: #3498db;
       border-radius: 4px;
   }
+

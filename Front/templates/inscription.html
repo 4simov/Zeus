@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription</title>
+        <link rel="stylesheet" href="http://127.0.0.1:5000/Users/Auror/Zeus/Front/templates/style.css">
+</head>
+<body>
+    <div class="container">
+<header>
+    <h1>Station Météo Zeus</h1>
+</header>
+
+    <div>
+        <h2>Inscription</h2> 
+    </div>
+
+    <form action="/inscription" method="post">
+        <label for="username">Nom d'utilisateur :</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="password">Mot de passe (8 caractères minimum) : </label>
+        <input type="password" id="password" name="password" minlength="8" required>
+        <br>
+        <label for="confirm_password">Confirmer le mot de passe (8 caractères minimum) :</label>
+        <input type="password" id="confirm_password" name="confirm_password" minlength="8" required>
+        <br>
+        <button type="submit">S'inscrire</button>
+    </form>
+
+</body>
+</html>
