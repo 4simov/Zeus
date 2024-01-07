@@ -11,7 +11,7 @@ class Generate():
     @generate_route.get('/generate')
     def postInit():
         # Vérifiez si la base de données est vide
-        if (db.session.query(User).all() or
+        """if (db.session.query(User).all() or
            db.session.query(Releve).all()):
             return {'message': 'La base de données n\'est pas vide. Aucune donnée générée.'}, 200
 
@@ -33,3 +33,21 @@ class Generate():
         db.session.commit()
 
         return {'message': 'Données générées avec succès.'}, 201
+        """
+
+        if(db.session.query(Sonde).all()) :
+            return "déjà initialisé"
+        else :
+            sonde1 = Sonde(
+                id=str(0x76),
+                activate = True
+            )
+            sonde2 = Sonde(
+                id=str(0x77),
+                activate = True
+            )
+
+            db.session.add(sonde1)
+            db.session.add(sonde2)
+            db.session.commit()
+            return "sondes initialisées"

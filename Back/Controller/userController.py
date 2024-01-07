@@ -3,7 +3,7 @@ from Database.db_connexion import db
 from Models.userModel import db as user_db, User
 user_route = Blueprint('user', __name__)
 
-class User() :    
+class UserController() :    
     @user_route.get('/user')
     def get():
         return 'Fonction GET all'

@@ -8,6 +8,7 @@ from Controller.generateController import generate_route
 
 app = Flask(__name__, template_folder='../Front')
 api = Api(app, version='1.0', title='Mon API', description='Description de mon API')
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///meteo.db'  # Chemin vers la base de données SQLite
 
 app.register_blueprint(user_route)
@@ -21,7 +22,7 @@ with app.app_context():
 
 
     
-@app.route("/")
+@app.route("/home")
 def hello_world():
     return render_template("index.html")
 
