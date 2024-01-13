@@ -13,7 +13,7 @@ class ReleveController() :
 
     @releve_route.get("/releve/<idR>")
     def get_releve(idR):
-        re = Releve.query.filter_by(id = idR).first()
+        re = Releve.query.get(idR)
         response = re.to_json() 
         return response
 
