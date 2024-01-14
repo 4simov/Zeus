@@ -5,11 +5,14 @@ from Controller.userController import user_route
 from Controller.sondeController import sonde_route
 from Controller.releveController import releve_route
 from Controller.generateController import generate_route
+from flask_cors import CORS
 
 app = Flask(__name__, template_folder='../Front')
-api = Api(app, version='1.0', title='Mon API', description='Description de mon API')
-
+CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///meteo.db'  # Chemin vers la base de données SQLite
+
+api = Api(app, version='1.0', title='Mon API', description='Description de mon API')
 
 app.register_blueprint(user_route)
 app.register_blueprint(sonde_route)

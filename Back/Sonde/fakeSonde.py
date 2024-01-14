@@ -5,13 +5,18 @@ import threading
 import time
 import requests
 import json
+import prelevement
+import random
+import statistics
 
 class SondeThread( threading.Thread) :
-    baseUrl = "http://127.0.0.1:5000"
+    baseUrl = "http://127.0.0.1:5000"   # url du site
     address1 = 0x76
     address2 = 0x77
-    idSonde= ""
-    isActivate = False
+    idSonde= ""         #id de la sonde, dans notre cas ça correspond à l'adresse i2c de la sonde
+    isActivate = False  #sert à indiquer au thread de se fermer
+    rateBetweenData = 5 #en sec
+
     def __init__(self, sonde) :
         super(SondeThread, self).__init__()
         self.idSonde = sonde
@@ -26,24 +31,18 @@ class SondeThread( threading.Thread) :
                 if self.isActivate == False :
                     return "Désactivation de la sonde " + self.idSonde
                 # Extract temperature, pressure, and humidity
-                temperature_celsius = 15
-                pressure = 20
-                humidity = 20
+                print("boucle")
+                p = self.fakePrelevement()
                 date = str(datetime.datetime.now())
 
                 r = requests.post(self.baseUrl + '/re', json={
-                    "temperature": temperature_celsius,
-                    "humidite": humidity,
+                    "temperature": p.temperature,
+                    "humidite": p.humidite,
                     "sonde_id": str(self.idSonde),
                     "date": date
                 })
-                r2 = requests.put(self.baseUrl +'/sonde/' + self.idSonde, json = {
-                    "activation" : False 
-                })
                 print(f"Status Code: {r.status_code}, Response: {r.json()}")
-                print(f"Status Code: {r2.status_code}, Response: {r2.json()}")
-                # Wait for a few seconds before the next reading
-                time.sleep(10)
+                time.sleep(self.rateBetweenData)
 
             except KeyboardInterrupt:
                 print('Program stopped')
@@ -54,3 +53,22 @@ class SondeThread( threading.Thread) :
         
         return "Désactivation de la sonde " + self.idSonde
     
+    def fakePrelevement(self) :
+        listT = []
+        listH = []
+        n = 5
+        i = 0
+        rate = 0.5
+
+        while i < n:
+            listT.append(random.randint(-5, 40))
+            listH.append(random.randint(0, 100))
+            i += 1
+            print(i)
+            time.sleep(rate)
+        
+        return prelevement.Prelevement(statistics.mean(listT), statistics.mean(listH))
+    
+    def realPrelevement() :
+        return prelevement.Prelevement()
+
