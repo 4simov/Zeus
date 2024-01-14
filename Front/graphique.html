@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=0.5">
   <title>Graphique Dynamique BME280</title>
   <!-- Inclure Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <!-- Créer un canvas pour le graphique -->
-  <canvas id="myChart" width="200" height="100"></canvas>
+  <canvas id="myChart" width="200px" height="100px"></canvas>
 
   <script>
     // Données initiales
@@ -79,7 +79,7 @@
     }
 
     // Simuler la mise à jour toutes les quelques secondes
-    setInterval(updateChart, 3000); // Mettez à jour toutes les 3 secondes (3000 millisecondes)
+    setInterval(updateChart, 1000000); // Mettez à jour toutes les 3 secondes (3000 millisecondes)
 
     // Fonction utilitaire pour générer un entier aléatoire dans une plage donnée (simulé ici)
     function getRandomInt(min, max) {

@@ -3,6 +3,7 @@ flask
 Flask-SQLAlchemy
 SQLAlchemy
 smbus2
-bme280
+#bme280
 RPI.BME280
 requests
+thread
