@@ -3,13 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=0.5">
+  <link rel="stylesheet" href="style.css">
   <title>Graphique Dynamique BME280</title>
   <!-- Inclure Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <!-- Créer un canvas pour le graphique -->
-  <canvas id="myChart" width="200px" height="100px"></canvas>
+  <sonde class="panel-sonde">
+    
+  </sonde>
+    <!-- Créer un canvas pour le graphique -->
+    <canvas id="myChart" style="position: relative; height:40vh; width:80vw"></canvas>
+
 
   <script>
     // Données initiales
@@ -27,13 +32,6 @@
         data: [],
         backgroundColor: 'rgba(54, 162, 235, 0.2)',
         borderColor: 'rgba(54, 162, 235, 1)',
-        borderWidth: 1,
-        fill: false
-      }, {
-        label: 'Pression (hPa)',
-        data: [],
-        backgroundColor: 'rgba(255, 206, 86, 0.2)',
-        borderColor: 'rgba(255, 206, 86, 1)',
         borderWidth: 1,
         fill: false
       }]
@@ -75,16 +73,17 @@
       };
 
       var timestamp = new Date().toLocaleTimeString();
-      addData(myChart, timestamp, [nouvelleLecture.temperature, nouvelleLecture.humidite, nouvelleLecture.pression]);
+      addData(myChart, timestamp, [nouvelleLecture.temperature, nouvelleLecture.humidite]);
     }
 
     // Simuler la mise à jour toutes les quelques secondes
-    setInterval(updateChart, 1000000); // Mettez à jour toutes les 3 secondes (3000 millisecondes)
+    //setInterval(updateChart, 1000); // Mettez à jour toutes les 3 secondes (3000 millisecondes)
 
     // Fonction utilitaire pour générer un entier aléatoire dans une plage donnée (simulé ici)
     function getRandomInt(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
+
   </script>
 </body>
 </html>
