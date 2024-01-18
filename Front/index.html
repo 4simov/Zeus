@@ -11,10 +11,32 @@
     <div class = "infos">
         <div>
             <div class = "i">
-                <span>adresse ip :</span>
+                <span id="datetime">
+                    <script>
+                        function updateDateTime() {
+                            // create a new `Date` object
+                            const now = new Date();
+
+                            // get the current date and time as a string
+                            const currentDateTime = now.toLocaleString();
+
+                            // update the `textContent` property of the `span` element with the `id` of `datetime`
+                            document.querySelector('#datetime').textContent = "date actuelle : " + currentDateTime;
+                        }
+                        setInterval(updateDateTime, 1000);
+                    </script>
+                </span>
             </div>
             <div class = "i">
-                date actuelle 
+                <span id="ip"></span>
+                <script>
+                    fetch('https://api.ipify.org?format=json')
+                            .then(response => response.json())
+                            .then(async data => {
+                                document.querySelector('#ip').textContent = "ip : " + data.ip;
+                            });
+                </script>
+                
             </div>
             <div class = "i">
                 dernier relevé :
@@ -33,6 +55,9 @@
                 <input type="checkbox" id="myCheckbox1" onchange="SetSondeActivation(118)">
                 <span class="slider round"></span>
             </label>
+            <div>
+                <span id="lr1"></span>
+            </div>
         </div>
         <div class = "panel-graph">
             <script>

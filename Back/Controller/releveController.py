@@ -1,4 +1,4 @@
-from sqlalchemy import text
+from sqlalchemy import desc, text
 from Database.db_connexion import db
 from Models.releveModel import Releve
 from flask import Blueprint, abort, request, jsonify
@@ -19,7 +19,7 @@ class ReleveController() :
 
     @releve_route.get("/releve-by-sonde/<idS>")
     def get_releveBySonde(idS):
-        re = Releve.query.filter_by(sonde_id = idS)
+        re = Releve.query.filter_by(sonde_id = idS).order_by(Releve.date)
         response = [r.to_json() for r in re]
         return response
 
