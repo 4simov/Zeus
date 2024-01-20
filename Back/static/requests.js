@@ -1,3 +1,5 @@
+baseUrl = "http://192.168.1.62:5000/";
+
 function toggleCheck() {
     if(document.getElementById("myCheckbox").checked === true){
       document.getElementById("aLink").style.display = "block";
@@ -10,7 +12,7 @@ function GetSondeActivation(id) {
     var a1 = document.getElementById("myCheckbox1");
     if(a1.checked === true) {
         //location.reload();
-        fetch('http://127.0.0.1:5000/sonde/' + id, {
+        fetch(baseUrl +'sonde/' + id, {
             method: 'GET'
         })
         .then((response) => response.json())
@@ -35,7 +37,7 @@ function GetSondeActivation(id) {
   }*/
 
   async function GetListSondes() {
-    const r = await fetch('http://127.0.0.1:5000/sonde', {
+    const r = await fetch(baseUrl + 'sonde', {
       method: 'GET'
     })
     .then(async (response) => {

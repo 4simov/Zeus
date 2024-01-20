@@ -35,19 +35,15 @@ class Generate():
         return {'message': 'Données générées avec succès.'}, 201
         """
 
-        if(db.session.query(Sonde).all()) :
-            return "déjà initialisé"
-        else :
-            sonde1 = Sonde(
+        sonde1 = Sonde(
                 id=str(0x76),
                 activate = True
             )
-            sonde2 = Sonde(
+        sonde2 = Sonde(
                 id=str(0x77),
                 activate = True
             )
-
-            db.session.add(sonde1)
-            db.session.add(sonde2)
-            db.session.commit()
-            return "sondes initialisées"
+        db.session.add(sonde1)
+        db.session.add(sonde2)
+        db.session.commit()
+        return "sondes initialisées"

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../static/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="../static/graph.js"></script>
+<script src="../static/requests.js"></script>
+<script src="../static/header.js"></script>
+
+
+<body>
+    <div id = "i"></div>
+    <div id = "b"></div>
+</body>
+<!-- mise à jour entête qui fait planter le graphe -->
+<script>
+    head();
+    launchSonde()
+
+    fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(async data => {
+                document.querySelector('#ip').textContent = "ip : " + data.ip;
+            });
+</script>
+<script>
+    function updateDateTime() {
+        // create a new `Date` object
+        const now = new Date();
+
+        // get the current date and time as a string
+        const currentDateTime = now.toLocaleString();
+
+        // update the `textContent` property of the `span` element with the `id` of `datetime`
+        document.querySelector('#datetime').textContent = "date actuelle : " + currentDateTime;
+    }
+    setInterval(updateDateTime, 1000);
+</script>
+</html>
+
+<script>
+</script>
+

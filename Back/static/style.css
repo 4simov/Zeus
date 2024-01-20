@@ -1,5 +1,8 @@
 body {
-  background-color: #C5E0D8;
+  background-color: #C7EAE4;
+  margin-top: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 
 .panel-sonde {
@@ -24,7 +27,8 @@ body {
 }
 
 header {
-  background-color: #C7EAE4;
+    background-color: #C5E0D8;
+    padding-top: 0px;
     width: 100%;
 }
 
@@ -44,7 +48,8 @@ header {
   margin: 10px;
   padding: 30px;
   width: 200px;
-  background-color: #B5FFE9;
+  border-radius: 15px;
+  background-color: #C7EAE4;
 }
 /* The switch - the box around the slider */
 .switch {

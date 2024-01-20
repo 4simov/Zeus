@@ -7,7 +7,7 @@ from Controller.releveController import releve_route
 from Controller.generateController import generate_route
 from flask_cors import CORS
 
-app = Flask(__name__, template_folder='../Front')
+app = Flask(__name__, template_folder='templates', static_folder="static")
 CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///meteo.db'  # Chemin vers la base de données SQLite
