@@ -2,19 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=0.5">
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Graphique Dynamique BME280</title>
   <!-- Inclure Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <sonde class="panel-sonde">
-    
-  </sonde>
-    <!-- Créer un canvas pour le graphique -->
-    <canvas id="myChart" style="position: relative; height:40vh; width:80vw"></canvas>
-
+  <!-- Créer un canvas pour le graphique -->
+  <canvas id="myChart" width="200" height="100"></canvas>
 
   <script>
     // Données initiales
@@ -53,6 +48,14 @@
       data: initialData,
       options: options
     });
+    
+    function removeData(chart) {
+        chart.data.labels.pop();
+        chart.data.datasets.forEach((dataset) => {
+            dataset.data.pop();
+        });
+        chart.update();
+    }
 
     // Fonction pour ajouter des données au graphique
     function addData(chart, label, data) {
@@ -60,6 +63,18 @@
       chart.data.datasets.forEach((dataset, index) => {
         dataset.data.push(data[index]);
       });
+      chart.update();
+    }
+
+    function putData(chart, temp, hum, labels) {
+      chart.data.labels = [];
+      chart.data.datasets.forEach((dataset, index) => {
+        dataset.data = [];
+      });
+      for (let index = 0; index < temp.length; index++) {
+        addData(myChart, index, [temp[index], hum[index]]);
+      }
+      console.log(chart.data);
       chart.update();
     }
 
@@ -71,11 +86,26 @@
         humidite: getRandomInt(40, 60),    // Remplacez par la vraie lecture d'humidité
         pression: getRandomInt(1000, 1010) // Remplacez par la vraie lecture de pression
       };
-
+      
+      //removeData(myChart);
       var timestamp = new Date().toLocaleTimeString();
-      addData(myChart, timestamp, [nouvelleLecture.temperature, nouvelleLecture.humidite]);
+      labels = [1, 2, 3];
+      listTemp = [12,14,16];
+      listHum =[40, 60, 33];
+
+      putData(myChart, listTemp, listHum, labels);
+
+      //addData(myChart, timestamp, [nouvelleLecture.temperature, nouvelleLecture.humidite, nouvelleLecture.pression]);
+      //addData(myChart, timestamp, [nouvelleLecture.temperature, nouvelleLecture.humidite, nouvelleLecture.pression]);
     }
 
+    // Simuler la mise à jour toutes les quelques secondes
+    setInterval(updateChart, 1000); // Mettez à jour toutes les 3 secondes (3000 millisecondes)
+
+    // Fonction utilitaire pour générer un entier aléatoire dans une plage donnée (simulé ici)
+    function getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
   </script>
 </body>
 </html>

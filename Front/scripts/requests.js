@@ -18,18 +18,6 @@ function GetSondeActivation(id) {
   }
 }
 
-  function SetSondeActivation(id) {
-    fetch('http://127.0.0.1:5000/sonde/' + id, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                activation: a1.checked
-            })
-        }
-    )
-    .then((response) => response.json())
-    .then((response) => console.log(JSON.stringify(response)));
-  }
 /*
 
   async function GetReleve(idSonde) {
@@ -45,3 +33,14 @@ function GetSondeActivation(id) {
             return r;
         });
   }*/
+
+  async function GetListSondes() {
+    const r = await fetch('http://127.0.0.1:5000/sonde', {
+      method: 'GET'
+    })
+    .then(async (response) => {
+      return await response.json()
+    })
+    
+    return r;
+  }
