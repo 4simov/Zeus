@@ -14,5 +14,6 @@ class Releve(db.Model):
             'id': self.id,
             'idSonde': self.sonde_id,
             'temperature': self.temperature,
-            'humidite': self.humidite
+            'humidite': self.humidite,
+            'date': self.date
         }

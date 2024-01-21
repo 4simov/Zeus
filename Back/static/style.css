@@ -1,12 +1,56 @@
-.header {
+body {
+  background-color: #C7EAE4;
+  margin-top: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.panel-sonde {
+  display:inline-block;
+  height: auto;
+  width: 1200px;
+  margin: 30px;
+}
+
+.panel-graph {
+  height: 400px;
+  width: 800px;
+}
+
+.inline-flex {
+  display: inline-flex;
+  align-items: center;
+  
+  div {
+    margin: 10px;
+  }
+}
+
+header {
+    background-color: #C5E0D8;
+    padding-top: 0px;
     width: 100%;
 }
 
-.h1 {
+.title {
     text-align: center;
     font-size: 40px;
 }
 
+.infos {
+  text-align: center;
+  div {
+    display: inline-flex;
+  }
+}
+
+.i {
+  margin: 10px;
+  padding: 30px;
+  width: 200px;
+  border-radius: 15px;
+  background-color: #C7EAE4;
+}
 /* The switch - the box around the slider */
 .switch {
     position: relative;
@@ -68,4 +112,8 @@
   
   .slider.round:before {
     border-radius: 50%;
+  }
+
+  .graph {
+    width: 300px;
   }

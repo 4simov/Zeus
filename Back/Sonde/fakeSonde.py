@@ -15,7 +15,7 @@ class SondeThread( threading.Thread) :
     address2 = 0x77
     idSonde= ""         #id de la sonde, dans notre cas ça correspond à l'adresse i2c de la sonde
     isActivate = False  #sert à indiquer au thread de se fermer
-    rateBetweenData = 5 #en sec
+    rateBetweenData = 10 #en sec
 
     def __init__(self, sonde) :
         super(SondeThread, self).__init__()
@@ -66,7 +66,6 @@ class SondeThread( threading.Thread) :
             i += 1
             print(i)
             time.sleep(rate)
-        
         return prelevement.Prelevement(statistics.mean(listT), statistics.mean(listH))
     
     def realPrelevement() :

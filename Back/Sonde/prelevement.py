@@ -9,7 +9,7 @@ class Prelevement() :
 
     def __init__(self, t, h) :
         self.temperature = t
-        self.h = h
+        self.humidite = h
 
     def add(self, prelevement) :
         self.temperature = prelevement.temperature

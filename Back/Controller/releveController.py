@@ -1,4 +1,4 @@
-from sqlalchemy import text
+from sqlalchemy import desc, text
 from Database.db_connexion import db
 from Models.releveModel import Releve
 from flask import Blueprint, abort, request, jsonify
@@ -19,7 +19,7 @@ class ReleveController() :
 
     @releve_route.get("/releve-by-sonde/<idS>")
     def get_releveBySonde(idS):
-        re = Releve.query.filter_by(sonde_id = idS)
+        re = Releve.query.filter_by(sonde_id = idS).order_by(Releve.date)
         response = [r.to_json() for r in re]
         return response
 
@@ -28,6 +28,7 @@ class ReleveController() :
         db.session.execute(text("pragma foreign_keys=on"))
         if request.is_json:
             data = request.json
+            print("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP", data.get('humidite'));
             re = Releve(sonde_id = data.get('sonde_id'), temperature = data.get('temperature'), humidite = data.get('humidite'), date = data.get("date"))
             
             #re.temperature = data.get('temperature')
