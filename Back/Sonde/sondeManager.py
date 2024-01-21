@@ -24,22 +24,22 @@ for d in data:
 
 #Activation de toutes les sondes au lancement
 for t in list :
-      r2 = requests.put(baseUrl +'/sonde/' + t.idSonde, json = {
-                    "activation" : True 
-                })
+      t.start()
+#      r2 = requests.put(baseUrl +'/sonde/' + t.idSonde, json = {
+#                    "activation" : True 
+#                })
 
 #boucle principale de gestion des sondes 
-while True :
+while len(list) > 0 :
     try :
         for t in list :
                 print("Boucle manager")
-                if t.is_alive() == False:
+                if t.isActivate == False:
                     print("alive")
                     #Vérifie si la sonde est désactivée alors qu'elle est active sur la table Sonde dans la BDD
                     if t.isActivate == False and is_activate(t.idSonde) :
                         t.isActivate = True
                         print("Relance la sonde")
-                        t.start()
                 else :
                     #Vérifie si la sonde est désactivée en consultant la table Sonde dans la BDD
                     if is_activate(t.idSonde) == False:

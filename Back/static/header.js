@@ -1,8 +1,10 @@
 
 function head() {
-    document.getElementById("i").innerHTML = `
+    document.getElementById("header").innerHTML = `
     <header>
-        <div class ="title">ZEUS</div>
+        <div class ="title">
+            <h1>ZEUS</h1>
+        </div>
         <div class = "infos">
             <div>
                 <div class = "i">

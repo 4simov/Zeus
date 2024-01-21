@@ -15,43 +15,45 @@ class SondeThread( threading.Thread) :
     address2 = 0x77
     idSonde= ""         #id de la sonde, dans notre cas ça correspond à l'adresse i2c de la sonde
     isActivate = False  #sert à indiquer au thread de se fermer
-    rateBetweenData = 10 #en sec
+    rateBetweenData = 1 #en sec
 
     def __init__(self, sonde) :
         super(SondeThread, self).__init__()
         self.idSonde = sonde
+        self._stop_event = threading.Event()
 
-    def close(self) :
-        self.activate = False
+    def close(self):
+        return self.isActivate
 
     def run(self) :
-        
-        while self.isActivate:
+        print('Program begin')
+        while True :
             try:
-                if self.isActivate == False :
-                    return "Désactivation de la sonde " + self.idSonde
-                # Extract temperature, pressure, and humidity
-                print("boucle")
-                p = self.fakePrelevement()
-                date = str(datetime.datetime.now())
+                if self.isActivate:
+                    # Extract temperature, pressure, and humidity
+                    print("boucle")
+                    p = self.fakePrelevement()
+                    date = str(datetime.datetime.now())
 
-                r = requests.post(self.baseUrl + '/re', json={
-                    "temperature": p.temperature,
-                    "humidite": p.humidite,
-                    "sonde_id": str(self.idSonde),
-                    "date": date
-                })
-                print(f"Status Code: {r.status_code}, Response: {r.json()}")
+                    r = requests.post(self.baseUrl + '/re', json={
+                        "temperature": p.temperature,
+                        "humidite": p.humidite,
+                        "sonde_id": str(self.idSonde),
+                        "date": date
+                    })
+                    print(f"Status Code: {r.status_code}, Response: {r.json()}")
                 time.sleep(self.rateBetweenData)
 
             except KeyboardInterrupt:
                 print('Program stopped')
+                self.close()
                 break
             except Exception as e:
                 print('An unexpected error occurred:', str(e))
+                self.close()
                 break
         
-        return "Désactivation de la sonde " + self.idSonde
+        return "############################################Désactivation de la sonde " + self.idSonde
     
     def fakePrelevement(self) :
         listT = []
@@ -61,11 +63,21 @@ class SondeThread( threading.Thread) :
         rate = 0.5
 
         while i < n:
-            listT.append(random.randint(-5, 40))
-            listH.append(random.randint(0, 100))
-            i += 1
-            print(i)
-            time.sleep(rate)
+            try:
+                listT.append(random.randint(-5, 40))
+                listH.append(random.randint(0, 100))
+                i += 1
+                print(i)
+                time.sleep(rate)
+
+            except KeyboardInterrupt:
+                print('Program stopped')
+                self.stop()
+                break
+            except Exception as e:
+                print('An unexpected error occurred:', str(e))
+                self.stop()
+                break
         return prelevement.Prelevement(statistics.mean(listT), statistics.mean(listH))
     
     def realPrelevement() :

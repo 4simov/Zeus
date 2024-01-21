@@ -37,29 +37,33 @@ class Graphique {
 
   draw(sonde, adress) {
     const newDiv = document.createElement("div");
-    var current = document.getElementById("b");
+    var current = document.getElementById("content");
     // and give it some content
     newDiv.innerHTML = `
     <div class = "panel-sonde">
         <div class ="inline-flex">
-            <div>
-                Sonde ` + adress + ` 
-            </div>
             <label class="switch">
                 <input type="checkbox" id="checkbox` + sonde.id + `" onchange="SetSondeActivation(` + sonde.id +`); toggleCheck(` + sonde.id + `)">
                 <span class="slider round"></span>
             </label>
             <div>
-                <span id="#dr` + sonde.id + `"></span>
+                Sonde ` + adress + ` 
+            </div>
+            <div>
+                <span class ="center" id="#dr` + sonde.id + `"></span>
             </div>
         </div>
+        <button class="icon-button">
+              <span class="icon">🚀</span>
+              Click me
+        </button>
         <div id = "g` + sonde.id + `" >
               <canvas id="myChart` + sonde.id + `" chart-options="options" style="position: relative; height:40vh; width:80vw"></canvas>
         </div>
     </div>
   `;
-    document.body.appendChild(newDiv);
-    console.log(document.getElementById("b").innerHTML);
+    current.appendChild(newDiv);
+    console.log(document.getElementById("content").innerHTML);
   }
 
   initData(sonde) {
@@ -201,7 +205,7 @@ class Graphique {
                 listTemp.push(r[index]["temperature"]);
                 listHum.push(r[index]["humidite"]);
             }
-            document.getElementById('#dr' + sonde.id).textContent = "dernier relevé : " +r[0]["temperature"];
+            document.getElementById('#dr' + sonde.id).textContent = "dernier relevé : " +r[r.length-1]["temperature"];
             this.putData(sonde, listLabel, listTemp, listHum);
             //sonde.chart.update();
         }); 

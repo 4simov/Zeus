@@ -28,7 +28,6 @@ class ReleveController() :
         db.session.execute(text("pragma foreign_keys=on"))
         if request.is_json:
             data = request.json
-            print("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP", data.get('humidite'));
             re = Releve(sonde_id = data.get('sonde_id'), temperature = data.get('temperature'), humidite = data.get('humidite'), date = data.get("date"))
             
             #re.temperature = data.get('temperature')
