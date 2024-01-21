@@ -13,17 +13,51 @@
 <body>
     <div id = "i"></div>
     <div id = "b"></div>
+    <!--<div class = "panel-sonde">
+        <div class ="inline-flex">
+            <div>
+                Sonde + 118
+            </div>
+            <label class="switch">
+                <input type="checkbox" id="checkbox118" onchange="SetSondeActivation('118'); toggleCheck('118')">
+                <span class="slider round"></span>
+            </label>
+            <div>
+                <span id="#dr118"></span>
+            </div>
+        </div>
+        <div id = "g118" >
+              <canvas id="myChart118" chart-options="options" style="position: relative; height:40vh; width:80vw"></canvas>
+        </div>
+    </div>
+    <div class = "panel-sonde">
+        <div class ="inline-flex">
+            <div>
+                Sonde + 118
+            </div>
+            <label class="switch">
+                <input type="checkbox" id="checkbox119" onchange="SetSondeActivation('119'); toggleCheck('119')">
+                <span class="slider round"></span>
+            </label>
+            <div>
+                <span id="#dr119"></span>
+            </div>
+        </div>
+        <div id = "g119" >
+              <canvas id="myChart119" chart-options="options" style="position: relative; height:40vh; width:80vw"></canvas>
+        </div>
+    </div>-->
 </body>
 <!-- mise à jour entête qui fait planter le graphe -->
 <script>
     head();
-    launchSonde()
-
-    fetch('https://api.ipify.org?format=json')
+    document.querySelector('#ip').textContent = "ip : " + getId();
+    //launchSonde()
+    /*fetch('https://api.ipify.org?format=json')
             .then(response => response.json())
             .then(async data => {
                 document.querySelector('#ip').textContent = "ip : " + data.ip;
-            });
+            });*/
 </script>
 <script>
     function updateDateTime() {

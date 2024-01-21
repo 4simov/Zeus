@@ -1,10 +1,14 @@
-baseUrl = "http://192.168.1.62:5000/";
+const baseUrl = "http://192.168.1.62:5000/";
 
-function toggleCheck() {
-    if(document.getElementById("myCheckbox").checked === true){
-      document.getElementById("aLink").style.display = "block";
+function getId() {
+  return baseUrl.substring(7,19);
+}
+
+function toggleCheck(idSonde) {
+    if(document.getElementById("checkbox" + idSonde).checked === true){
+      document.getElementById("g" + idSonde).style.display = "block";
     } else {
-      document.getElementById("aLink").style.display = "none";
+      document.getElementById("g" + idSonde).style.display = "none";
     }
   }
 

@@ -14,7 +14,6 @@ class Sondes{
 
 class Graphique {
   listSondes;
-  activate = true;
   idInterval = 0;
 
   constructor() {
@@ -25,41 +24,47 @@ class Graphique {
     this.listSondes = [];
     const sondes = await GetListSondes();
 
-    for (let index = 0; index < 1; index++) {
+    for (let index = 0; index < 2; index++) {
       const element = sondes[index];
       const s = new Sondes(element["id"]);
       this.draw(s, s.id);
       this.initData(s);
       this.listSondes.push(s);
     }
+    console.log(this.listSondes[0].chart);
+    console.log(this.listSondes[1].chart);
   }
 
   draw(sonde, adress) {
-    document.getElementById("b").innerHTML += `
-      <div class = "panel-sonde">
-          <div class ="inline-flex">
-              <div>
-                  Sonde ` + adress + ` 
-              </div>
-              <label class="switch">
-                  <input type="checkbox" id="checkbox` + sonde.id + `" onchange="SetSondeActivation(` + sonde.id +`)">
-                  <span class="slider round"></span>
-              </label>
-              <div>
-                  <span id="#dr` + sonde.id + `"></span>
-              </div>
-          </div>
-          <div>
-                <canvas id="myChart` + sonde.id + `" style="position: relative; height:40vh; width:80vw"></canvas>
-          </div>
-      </div>
-    
-    `;
+    const newDiv = document.createElement("div");
+    var current = document.getElementById("b");
+    // and give it some content
+    newDiv.innerHTML = `
+    <div class = "panel-sonde">
+        <div class ="inline-flex">
+            <div>
+                Sonde ` + adress + ` 
+            </div>
+            <label class="switch">
+                <input type="checkbox" id="checkbox` + sonde.id + `" onchange="SetSondeActivation(` + sonde.id +`); toggleCheck(` + sonde.id + `)">
+                <span class="slider round"></span>
+            </label>
+            <div>
+                <span id="#dr` + sonde.id + `"></span>
+            </div>
+        </div>
+        <div id = "g` + sonde.id + `" >
+              <canvas id="myChart` + sonde.id + `" chart-options="options" style="position: relative; height:40vh; width:80vw"></canvas>
+        </div>
+    </div>
+  `;
+    document.body.appendChild(newDiv);
+    console.log(document.getElementById("b").innerHTML);
   }
 
   initData(sonde) {
     // Données initiales
-    const initialData = {
+    var initialData = {
         labels: [],
         datasets: [{
           label: 'Température (°C)',
@@ -80,6 +85,7 @@ class Graphique {
         {
           label: 'Humidité (%)',
           data: [],
+          type : 'bar',
           backgroundColor: 'rgba(54, 162, 235, 0.2)',
           borderColor: 'rgba(54, 162, 235, 1)',
           borderWidth: 1,
@@ -88,7 +94,7 @@ class Graphique {
     };
   
     // Configuration du graphique
-    const options = {
+    var options = {
         scales: {
           y: {
             beginAtZero: true
@@ -96,17 +102,22 @@ class Graphique {
         },
         animation: {
           duration: 0
-      }
+      },
+      responsive:true
     };
   
     // Créer le graphique avec les données initiales
-    sonde.ctx = document.getElementById('myChart' + sonde.id).getContext('2d');
+    var ctx = document.getElementById('myChart' + sonde.id).getContext('2d');
+    console.log(ctx);
+
     //Déclare le render du graphe
-    sonde.chart = new Chart(sonde.ctx, {
-      type: 'line',
-      data: initialData,
-      options: options
-    });
+    if(true) {
+      sonde.chart = new Chart(document.getElementById('myChart' + sonde.id).getContext('2d'), {
+        type: 'line',
+        data: initialData,
+        options: options
+      });
+    }
   }
 
   addData(sonde, label, data) {
@@ -114,7 +125,6 @@ class Graphique {
     sonde.chart.data.datasets.forEach((dataset, index) => {
       dataset.data.push(data[index]);
     });
-    sonde.chart.update();
   }
 
   putData(sonde, listLabel, listTemps, listHums) {
@@ -122,6 +132,7 @@ class Graphique {
     for (let index = 0; index < listLabel.length; index++) {
       this.addData(sonde, listLabel[index], [listTemps[index], listHums[index]]);
     }
+    sonde.chart.update();
   }
 
   removeData(sonde) {
@@ -131,18 +142,13 @@ class Graphique {
     });
   }
 
-  updateAll() {
+  async updateAll() {
     for (let index = 0; index < this.listSondes.length; index++) {
-      this.updateChart(this.listSondes[index]);
+      await this.updateChart(this.listSondes[index]);
     }
-    Window.onload = function() {
       for (let index = 0; index < this.listSondes.length; index++) {
         console.log(this.listSondes[index].chart.data);
-        //window.myLine = this.listSondes[index].chart;
       }
-    }
-
-
   }
 
   // Fonction pour mettre à jour le graphique avec de nouvelles données (simulé ici)
@@ -152,7 +158,6 @@ class Graphique {
       if(b) {
         await this.getReleve(sonde);
       }
-      //addData(myChart, timestamp, [nouvelleLecture.temperature, nouvelleLecture.humidite]);
   }
 
   async getSonde(id) {
@@ -173,7 +178,7 @@ class Graphique {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                activation: document.getElementById('myCheckbox1').checked
+                activation: document.getElementById('myCheckbox' + id).checked
             })
         }
     )
@@ -198,14 +203,13 @@ class Graphique {
             }
             document.getElementById('#dr' + sonde.id).textContent = "dernier relevé : " +r[0]["temperature"];
             this.putData(sonde, listLabel, listTemp, listHum);
-            sonde.chart.update();
+            //sonde.chart.update();
         }); 
   }
 }
 
-async function launchSonde() {
+function launchSonde() {
   const g = new Graphique();
-  console.log(g.listSondes);
   setInterval( async () => { g.updateAll(); }, 2000);
 }
 
@@ -235,12 +239,36 @@ function SetSondeActivation(id) {
     .then((response) => console.log(JSON.stringify(response)));
   }
 
-  function test() {
-      launchSonde();
-  }
-
   function loadScript(src) {
     const script = document.createElement("Script");
     script.src = src;
     document.head.prepend(script);
+  }
+
+  window.onload = function() {
+    launchSonde();
+    /*
+    var charts = document.getElementsByClassName("piechart");
+  
+    for (chart of charts) {
+      var ctx = chart.getContext('2d');
+  
+      new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ["Iowa", "Iowa State"],
+          datasets: [{
+            backgroundColor: [
+              "#CC0000",
+              "#F1BE48",
+            ],
+            data: [2000, 9000]
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false
+        }
+      });
+    }*/
   }

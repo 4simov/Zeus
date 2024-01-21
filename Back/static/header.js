@@ -10,7 +10,7 @@ function head() {
                     </span>
                 </div>
                 <div class = "i test">
-                    <span id="ip"></span>                
+                    <span id="ip">"ip : "</span>                
                 </div>
             </div>
         </div>

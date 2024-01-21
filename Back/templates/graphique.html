@@ -13,7 +13,7 @@
   <canvas id="myChart2" width="200" height="100"></canvas>
   <script>
     // Données initiales
-    var initialData2 = {
+    const initialData2 = {
       labels: [],
       datasets: [{
         label: 'Température (°C)',
@@ -33,7 +33,7 @@
     };
 
     // Configuration du graphique
-    var options2 = {
+    const options2 = {
       scales: {
         y: {
           beginAtZero: true
@@ -42,7 +42,7 @@
     };
 
     // Créer le graphique avec les données initiales
-    var ctx = document.getElementById('myChart').getContext('2d');
+    const ctx = document.getElementById('myChart').getContext('2d');
     const myChart = new Chart(ctx, {
       type: 'line',
       data: initialData2,
@@ -50,7 +50,7 @@
     });
 
     // Données initiales
-    var initialData = {
+    const initialData = {
       labels: [],
       datasets: [{
         label: 'Température (°C)',
@@ -70,7 +70,7 @@
     };
 
     // Configuration du graphique
-    var options = {
+    const options = {
       scales: {
         y: {
           beginAtZero: true
