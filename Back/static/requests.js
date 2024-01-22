@@ -1,4 +1,4 @@
-const baseUrl = "http://192.168.1.62:5000/";
+const baseUrl = "http://10.121.128.165:5000/";
 
 function getId() {
   return baseUrl.substring(7,19);
@@ -6,14 +6,14 @@ function getId() {
 
 function toggleCheck(idSonde) {
     if(document.getElementById("checkbox" + idSonde).checked === true){
-      document.getElementById("g" + idSonde).style.display = "block";
+      //document.getElementById("g" + idSonde).style.backgroundColor = "white";
     } else {
-      document.getElementById("g" + idSonde).style.display = "none";
+      //document.getElementById("g" + idSonde).style.backgroundColor = "grey";
     }
   }
 
 function GetSondeActivation(id) {
-    var a1 = document.getElementById("myCheckbox1");
+    var a1 = document.getElementById("myCheckbox" + id);
     if(a1.checked === true) {
         //location.reload();
         fetch(baseUrl +'sonde/' + id, {
@@ -23,7 +23,6 @@ function GetSondeActivation(id) {
         .then((response) => console.log(JSON.stringify(response)));
   }
 }
-
 /*
 
   async function GetReleve(idSonde) {

@@ -10,7 +10,7 @@ import random
 import statistics
 
 class SondeThread( threading.Thread) :
-    baseUrl = "http://127.0.0.1:5000"   # url du site
+    baseUrl = "http://10.121.128.165:5000/"   # url du site
     address1 = 0x76
     address2 = 0x77
     idSonde= ""         #id de la sonde, dans notre cas ça correspond à l'adresse i2c de la sonde

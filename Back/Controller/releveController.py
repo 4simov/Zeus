@@ -1,4 +1,4 @@
-from sqlalchemy import desc, text
+from sqlalchemy import desc, text, delete
 from Database.db_connexion import db
 from Models.releveModel import Releve
 from flask import Blueprint, abort, request, jsonify
@@ -37,12 +37,15 @@ class ReleveController() :
             return {'message': 'Données générées avec succès.'}, 201
         else:
             return 'Format not support'
-    
-    @releve_route.delete("/releve/<idR>")
+
+    # efface toutes les données rattachées à une sonde
+    @releve_route.delete("/releve-by-sonde/<idR>")
     def delete_releve(idR):
-        re = Releve.query.get(idR)
-        if re is None :
-            abort(404)
-        db.session.delete(re)
+        re = Releve.query.filter_by(sonde_id = idR).delete()
         db.session.commit()
+        #re = Releve.query.filter_by(sonde_id = idR)
+        #if re is None :
+        #   abort(404)
+        #db.session.delete(re)
+        #db.session.commit()        
         return re.to_json()

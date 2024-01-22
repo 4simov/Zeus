@@ -1,5 +1,5 @@
 
-baseUrl = "http://192.168.1.62:5000/";
+baseUrl = "http://10.121.128.165:5000/";
 
 class Sondes{
   id;
@@ -23,7 +23,6 @@ class Graphique {
   async loadListSonde() {
     this.listSondes = [];
     const sondes = await GetListSondes();
-
     for (let index = 0; index < 2; index++) {
       const element = sondes[index];
       const s = new Sondes(element["id"]);
@@ -31,8 +30,6 @@ class Graphique {
       this.initData(s);
       this.listSondes.push(s);
     }
-    console.log(this.listSondes[0].chart);
-    console.log(this.listSondes[1].chart);
   }
 
   draw(sonde, adress) {
@@ -53,9 +50,9 @@ class Graphique {
                 <span class ="center" id="#dr` + sonde.id + `"></span>
             </div>
         </div>
-        <button class="icon-button">
-              <span class="icon">🚀</span>
-              Click me
+        <button class="icon-button" onclick="deleteReleveSonde(` + sonde.id + `)">
+              <span class="icon"></span>
+              Supprimer les données
         </button>
         <div id = "g` + sonde.id + `" >
               <canvas id="myChart` + sonde.id + `" chart-options="options" style="position: relative; height:40vh; width:80vw"></canvas>
@@ -205,8 +202,10 @@ class Graphique {
                 listTemp.push(r[index]["temperature"]);
                 listHum.push(r[index]["humidite"]);
             }
-            document.getElementById('#dr' + sonde.id).textContent = "dernier relevé : " +r[r.length-1]["temperature"];
-            this.putData(sonde, listLabel, listTemp, listHum);
+            if(r.length > 0) {
+              document.getElementById('#dr' + sonde.id).textContent = "dernier relevé : " + parseFloat(r[r.length-1]["temperature"]).toFixed(2) + " °C " + parseFloat(r[r.length-1]["humidite"]).toFixed(2) + "%";
+              this.putData(sonde, listLabel, listTemp, listHum);
+            }
             //sonde.chart.update();
         }); 
   }
@@ -249,6 +248,14 @@ function SetSondeActivation(id) {
     document.head.prepend(script);
   }
 
+function deleteReleveSonde(id) {
+  console.log(baseUrl+'releve-by-sonde/' + id);
+    fetch(baseUrl + 'releve-by-sonde/' + id, {
+        method: 'DELETE',
+       	headers: { 'Content-Type': 'application/json' }
+    })
+    .then((response) => console.log(JSON.stringify(response)));
+}
   window.onload = function() {
     launchSonde();
     /*

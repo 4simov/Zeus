@@ -1,10 +1,10 @@
+from sonde import *
 import threading
 import time
 import requests
-import fakeSonde
 import json
 
-baseUrl = "http://127.0.0.1:5000"
+baseUrl = "http://10.121.128.165:5000/"
 
 #Consulte la table Sonde de la BDD pour savoir si la sonde est activée ou non
 def is_activate(idSonde) :
@@ -18,9 +18,11 @@ requests.get(baseUrl + '/generate')
 jsonSonde = requests.get(baseUrl + '/sonde')
 data = json.loads(jsonSonde.content)
 list = []
+i = 0
 for d in data:
       print("sonde : ", d)
-      list.append(fakeSonde.SondeThread(d["id"]))
+      s = SondeT(d["id"], 0x76)
+      list.append(s)
 
 #Activation de toutes les sondes au lancement
 for t in list :
@@ -28,7 +30,7 @@ for t in list :
 #      r2 = requests.put(baseUrl +'/sonde/' + t.idSonde, json = {
 #                    "activation" : True 
 #                })
-
+print(list, " ejlipjgrgrjirtghinoiohnvijhpfdonpjjjjjgd")
 #boucle principale de gestion des sondes 
 while len(list) > 0 :
     try :
